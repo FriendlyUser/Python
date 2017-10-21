@@ -1,0 +1,34 @@
+In [9]: from sympy import diff, symbols
+In [10]: x = symbols('x', real=True)
+In [11]: diff(x**5, x) In [12]: diff(x**5, x, x)
+Out[11]: 5*x**4 Out[12]: 20*x**3
+In [12]: diff(x**5, x, x)
+Out[12]: 20*x**3
+In [13]: diff(x**5, x).subs(x, 1.0)
+Out[13]: 5.00000000000000
+In [14]: diff(x**5, x, x).subs(x, 1.0)
+Out[14]: 20.0000000000000
+
+In [19]: y, z = symbols('y z', real=True)
+In [20]: diff(Exp(x * y * z), z, z, y, x).subs({x:1.0, y:1.0, z:2.0})
+Out[20]: 133.003009780752
+
+%% INtergration 
+
+In [1]: import numpy as np
+In [2]: p = np.poly1d([1,0,0,0,0,0]); \
+ ...: print p; \
+ ...: print p.integ()
+ 5
+1 x
+ 6
+0.1667 x
+In [3]: p.integ()(1.0) - p.integ()(-1.0)
+Out[3]: 0.0
+
+In [4]: from sympy import integrate, symbols
+In [5]: x, y = symbols('x y', real=True)
+In [6]: integrate(x**5, x)
+Out[6]: x**6/6
+In [7]: integrate(x**5, (x, -1, 1))
+Out[7]: 0

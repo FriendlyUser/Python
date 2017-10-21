@@ -5,13 +5,19 @@
 # This script requires the user to change the filename and working directory, ideally I would be able to include this requirements as arguments, but that will be added later.
 import PyPDF2, os,sys
 
+# For natural sorting
+import re
+
+_nsre = re.compile('([0-9]+)')
+
 print("Running the script called, ", sys.argv[0])
 ## Use a website like http://www.unit-conversion.info/texttools/replace-text/
 # This will allow for the proper slashing
-var = "C:/Users/wu/Downloads/University Fun/School/Summer 2017/ELEC 310/Final/Assignments"
+var = "C:/Users/wu/Downloads/University Fun/School/Summer 2017/ECON/Course Material (NOT EXAMS)"
 os.chdir(var);
 #filename = 'epictest.pdf'
-   # Get all the PDF filenames.
+
+# Get all the PDF filenames.
 pdfFiles = []
 # gets the pdfs in the directory of combinePdfs.py
 #for filename in os.listdir('.'): 
@@ -19,7 +25,14 @@ numOfMergedFiles = 0
 for filename in os.listdir('.'): 
    if filename.endswith('.pdf'): #consider adding regular expressions
        pdfFiles.append(filename)
-pdfFiles.sort(key=str.lower)
+
+
+def natural_sort_key(s):
+    return [int(text) if text.isdigit() else text.lower()
+            for text in re.split(_nsre, s)]  
+                
+pdfFiles.sort(key=natural_sort_key)
+
 
 pdfWriter = PyPDF2.PdfFileWriter()
 # Loop through all the PDF files.
@@ -40,8 +53,9 @@ for filename in pdfFiles:
         pdfWriter.addPage(pageObj)
 
 
-pdfOutput = open('ELEC310MergedAssnSoln.pdf', 'wb')
+pdfOutput = open('ECON180MERGEDLEC.pdf', 'wb')
 pdfWriter.write(pdfOutput)
 pdfOutput.close()
+
 print('The script is complete by ', numOfMergedFiles, ' merged files.')
 #sys.exit(0)
