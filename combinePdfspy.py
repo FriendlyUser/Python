@@ -9,12 +9,12 @@ import PyPDF2, os,sys
 import re
 
 _nsre = re.compile('([0-9]+)')
-
+location = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 print("Running the script called, ", sys.argv[0])
 ## Use a website like http://www.unit-conversion.info/texttools/replace-text/
 # This will allow for the proper slashing
-var = "C:/Users/wu/Downloads/University Fun/School/Summer 2017/ECON/Course Material (NOT EXAMS)"
-os.chdir(var);
+# var = "C:/Users/wu/Downloads/University Fun/School/Summer 2017/ECON/Course Material (NOT EXAMS)"
+os.chdir(location);
 #filename = 'epictest.pdf'
 
 # Get all the PDF filenames.
@@ -53,7 +53,9 @@ for filename in pdfFiles:
         pdfWriter.addPage(pageObj)
 
 
-pdfOutput = open('ECON180MERGEDLEC.pdf', 'wb')
+from easygui import enterbox as enterBox
+outputFileName = enterBox()
+pdfOutput = open(outputFileName, 'wb')
 pdfWriter.write(pdfOutput)
 pdfOutput.close()
 
